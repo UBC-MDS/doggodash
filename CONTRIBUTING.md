@@ -40,10 +40,10 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `Group_18_tempname` for local development.
+Ready to contribute? Here's how to set up `doggodash` for local development.
 
-1. Download a copy of `Group_18_tempname` locally.
-2. Install `Group_18_tempname` using `poetry`:
+1. Download a copy of `doggodash` locally.
+2. Install `doggodash` using `poetry`:
 
     ```console
     $ poetry install
@@ -69,5 +69,5 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Code of Conduct
 
-Please note that the `Group_18_tempname` project is released with a 
+Please note that the `doggodash` project is released with a 
 Code of Conduct. By contributing to this project you agree to abide by its terms.
