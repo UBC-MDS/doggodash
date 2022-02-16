@@ -1,1 +1,0 @@
-from Group_18_tempname import Group_18_tempname
