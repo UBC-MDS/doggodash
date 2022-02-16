@@ -1,11 +1,11 @@
-# Group_18_tempname
+# doggodash
 
 tbd
 
 ## Installation
 
 ```bash
-$ pip install Group_18_tempname
+$ pip install doggodash
 ```
 
 ## Usage
@@ -18,8 +18,8 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 
 ## License
 
-`Group_18_tempname` was created by Samuel Quist. It is licensed under the terms of the MIT license.
+`doggodash` was created by Samuel Quist. It is licensed under the terms of the MIT license.
 
 ## Credits
 
-`Group_18_tempname` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+`doggodash` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
