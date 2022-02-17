@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Group_18_tempname"
+name = "doggodash"
 version = "0.0.0"
 description = "tbd"
 authors = ["Samuel Quist"]
