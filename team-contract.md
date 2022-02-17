@@ -1,7 +1,7 @@
 # Team Contract
 
 ## Team Members
-* LG Nguyen
+* Linh Giang Nguyen
 * Sam Quist
 * Shiv Jena
 * Steven Leung

@@ -26,7 +26,7 @@ Examples of unacceptable behavior by participants include:
 
 Our team members are committed to ensuring an inclusive environment and addressing any behaviour that does not align with the Code of Conduct. Our team members currently include:
 
-* LG Nguyen
+* Linh Giang Nguyen
 * Sam Quist
 * Shiv Jena
 * Steven Leung
