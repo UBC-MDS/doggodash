@@ -1,12 +1,10 @@
 # doggodash
 
-tbd
+- TODO: short description
 
 ## Installation
 
-```bash
-$ pip install doggodash
-```
+To be determined.
 
 ## Usage
 
