@@ -2,6 +2,10 @@
 
 The DoggoDash, created using Dash and Python, provides interactive visualizations for users to explore the breeds of dog that match their preferences. To begin, users will choose up to four dog traits of interest from the dropdown menu (i.e. Affectionate With Family, Coat Type, Adaptability Level, Trainability Level). Thereafter, the user can decide the score (on a scale of 1-5) for each selected trait according to their preference using the slider provided (i.e. Score 1 for the Affectionate With Family trait if the user prefers an independent dog). As a result of the preferences, our algorithm will return a list of top five favorite dog breeds (in descending order) and display it on the landing page of the app.
 
+Here is a preview of DoggoDash (subject to change):
+
+![DoggoDash Preview](docs/images/sketch.png)
+
 ## Installation
 
 - Not required.
