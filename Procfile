@@ -1,1 +1,1 @@
-web: gunicorn src.doggodash:server
+web: gunicorn doggodash:server
