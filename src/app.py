@@ -4,8 +4,8 @@ import altair as alt
 import pandas as pd
 
 # Read in data
-traits_raw_df = pd.read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/breed_traits.csv")
-breed_rank_raw_df = pd.read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/breed_rank.csv")
+traits_raw_df = pd.read_csv("../data/breed_traits.csv")
+breed_rank_raw_df = pd.read_csv("../data/breed_rank.csv")
 
 # For traits list in checklist input
 traits_list_full = traits_raw_df.drop(columns=['Breed' ,'Coat Type', 'Coat Length']).columns
@@ -24,7 +24,7 @@ server = app.server
 app.layout = html.Div([
     html.Br(),
     html.Br(),
-
+    
     # Header for app
     html.H1('Doggodash', 
             style = { 
@@ -40,24 +40,24 @@ app.layout = html.Div([
     html.P(
         'Select your favourite Doggo traits'
     ),
-
+    
     dcc.Dropdown(
         id='traits-widget',
         value= traits_list_full[1:5],      # Default list
-
+       
         options=[{'label': col, 'value': col} for col in traits_list_full],
         placeholder='Select Doggo traits',
         multi=True
     ), 
     html.Br(),
-
+    
     html.Iframe(
         id='top5dogs_plot',
         style={
             'border-width': '0', 
             'width': '100%', 
             'height': '200px'}),
-
+    
     html.Br(),
     html.P("Data for top dog breeds as per your traits selection"),
     html.Iframe(
@@ -66,7 +66,7 @@ app.layout = html.Div([
             'border-width': '0', 
             'width': '100%', 
             'height': '400px'})
-
+    
     ])
 
 # Set up callbacks/backend
@@ -92,25 +92,25 @@ def plot_altair(traits_list):
     top_5_df (pandas.DataFrame): the dataframe with the top 5 breeds, the traits, 
             the total scores and the links to the images.
     """
-
+    
     traits_raw_df["BreedID"] = traits_raw_df.index
     breed_rank_raw_df["BreedID"] = breed_rank_raw_df.index
 
     print(f"traits_list={traits_list}") #for debug
     traits_df = traits_raw_df.set_index('BreedID')[traits_list]
-
+    
     traits_df['score'] = 0
 
     for i in range(len(traits_list)):
         if len(traits_list)==0:
             continue
         traits_df['score'] += traits_df[traits_list[i]] * traits_weights[i]
-
+        
     top_5_df = traits_df.sort_values('score', ascending=False).head(5).merge(
         breed_rank_raw_df, how='left', 
         on='BreedID'
     ) # Havent tried multiple outputs yet as it wasnt possible in single callback
-
+        
     top_5_plot = alt.Chart(top_5_df, title='Your Top 5 Dog Breeds').mark_bar().encode(
         x=alt.X('score:Q'),
         y=alt.Y('Breed:N', sort='-x')
