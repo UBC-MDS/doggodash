@@ -2,6 +2,7 @@
 from dash import Dash, html, dcc, Input, Output
 import altair as alt
 import pandas as pd
+import dash_bootstrap_components as dbc
 
 # Read in data
 traits_raw_df = pd.read_csv("breed_traits.csv")
@@ -17,59 +18,76 @@ traits_weights = [
 
 
 # Setup app and layout/frontend
-app = Dash(__name__,  external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
-app.layout = html.Div([
-    html.Br(),
-    html.Br(),
-    
-    # Header for app
-    html.H1('Doggodash', 
-            style = { 
+app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
+app.layout = dbc.Container(
+    [
+        # Header for app
+        html.H1(
+            'Doggodash', 
+             style = { 
                 'color': 'white', 
                 'fontSize': 40,
-                'background-color': 'grey',
+                'background-color': 'Indigo',
                 'textAlign': 'center'
-    }),
+                }
+        ),
+            
 
-    # Drop down for list of columns
-
-    html.Br(),
-    html.P(
-        'Select your favourite Doggo traits'
-    ),
-    
-    dcc.Dropdown(
-        id='traits-widget',
-        value= traits_list_full[1:5],      # Default list
-       
-        options=[{'label': col, 'value': col} for col in traits_list_full],
-        placeholder='Select Doggo traits',
-        multi=True
-    ), 
-    html.Br(),
-    
-    html.Iframe(
-        id='top5dogs_plot',
-        style={
-            'border-width': '0', 
-            'width': '100%', 
-            'height': '200px'}),
-    
-    html.Br(),
-    html.P("Data for top dog breeds as per your traits selection"),
-    html.Iframe(
-        id='top5dogs_df',
-        style={
-            'border-width': '0', 
-            'width': '100%', 
-            'height': '400px'})
-    
-    ])
+        # Drop down for list of columns
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.P(
+                        'Select your favourite Doggo traits'
+                    ),
+                    dcc.Dropdown(
+                        id='traits-widget',
+                        value= traits_list_full[1:5],      # Default list
+                        options=[{'label': col, 'value': col} for col in traits_list_full],
+                        placeholder='Select Doggo traits',
+                        multi=True,
+                        style={
+                            'height': '300px',
+                            'width': '280px',
+                            'fontSize': 14,
+                            'background-color': 'lavender'
+                        },
+                    )
+                ], md=5),
+                
+                dbc.Col([
+                    html.P('Select weights'),
+                    dcc.Slider(
+                       id='xslider', 
+                       min=0, 
+                       max=5
+                     )
+                ], md=3)
+                    
+            ]
+            ),
+            
+            dbc.Row([
+                html.Br(),
+                html.Iframe(
+                    id='top5dogs_plot',
+                    style={
+                        'display': 'block',
+                        'border-width': '0', 
+                        'width': '100%', 
+                        'height': '60%'
+                    },
+                ),              
+            ]),    
+            
+        ],
+        md=8), 
+    ],
+)
 
 # Set up callbacks/backend
 @app.callback(
     Output('top5dogs_plot', 'srcDoc'),
-    Output('top5dogs_df', 'srcDoc'),
     Input('traits-widget', 'value')
 )
 
@@ -113,7 +131,7 @@ def plot_altair(traits_list):
         y=alt.Y('Breed:N', sort='-x')
     )
 
-    return top_5_plot.to_html(), top_5_df.to_html()
+    return top_5_plot.to_html()
 
 
 if __name__ == '__main__':
