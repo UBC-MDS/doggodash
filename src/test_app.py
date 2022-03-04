@@ -49,7 +49,7 @@ app.layout = html.Div([
     html.Br(),
     
     html.Iframe(
-        id='top5dogs_plot',
+        id='top_5_dogs_plot',
         style={
             'border-width': '0', 
             'width': '100%', 
@@ -58,18 +58,28 @@ app.layout = html.Div([
     html.Br(),
     html.P("Data for top dog breeds as per your traits selection"),
     html.Iframe(
-        id='top5dogs_df',
+        id='top_5_dogs_df',
         style={
             'border-width': '0', 
             'width': '100%', 
+            'height': '400px'}),
+
+    html.Br(),
+    html.P("Ranking trend of these dog breeds in recent years"),
+    html.Iframe(
+        id='top_5_rank_plot',
+        style={
+            'border-width': '0', 
+            'width': '300%', 
             'height': '400px'})
     
     ])
 
 # Set up callbacks/backend
 @app.callback(
-    Output('top5dogs_plot', 'srcDoc'),
-    Output('top5dogs_df', 'srcDoc'),
+    Output('top_5_dogs_plot', 'srcDoc'),
+    Output('top_5_dogs_df', 'srcDoc'),
+    Output('top_5_rank_plot', 'srcDoc'),
     Input('traits-widget', 'value')
 )
 
@@ -113,7 +123,29 @@ def plot_altair(traits_list):
         y=alt.Y('Breed:N', sort='-x')
     )
 
-    return top_5_plot.to_html(), top_5_df.to_html()
+
+    # The following code is for plotting the trend of ranking of the top 5 breeds.
+    col_list = list()
+
+    for year in range(2013, 2021):
+        new_col_name = str(year)
+        col_list.append(str(year))
+        old_col_name = new_col_name + " " + "Rank"
+        top_5_df.rename(columns={old_col_name:new_col_name}, inplace=True)
+
+    top_5_rank_df = top_5_df.melt(id_vars = ['Breed', 'BreedID'], value_vars=col_list, var_name='Rank year', value_name='Rank')    
+        
+    #top_5_rank_df
+
+    top_5_rank_plot = alt.Chart(top_5_rank_df).mark_line().encode(
+        y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
+        x=alt.X('Rank year:Q', axis=alt.Axis(format='.0f')),
+        color='Breed'
+    )
+
+    top_5_rank_plot 
+
+    return top_5_plot.to_html(), top_5_df.to_html(), top_5_rank_plot.to_html()
 
 
 if __name__ == '__main__':
