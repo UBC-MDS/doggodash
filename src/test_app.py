@@ -133,7 +133,7 @@ def plot_altair(traits_list):
         old_col_name = new_col_name + " " + "Rank"
         top_5_df.rename(columns={old_col_name:new_col_name}, inplace=True)
 
-    top_5_rank_df = top_5_df.melt(id_vars = ['Breed', 'BreedID'], value_vars=col_list, var_name='Rank year', value_name='Rank')    
+    top_5_rank_df = top_5_df.melt(id_vars = ['Breed', 'BreedID', 'score'], value_vars=col_list, var_name='Rank year', value_name='Rank')    
         
     #top_5_rank_df
 
@@ -141,7 +141,7 @@ def plot_altair(traits_list):
         y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
         x=alt.X('Rank year:Q', axis=alt.Axis(format='.0f')),
         color='Breed',
-        tooltip=['Breed', 'Rank year', 'Rank']
+        tooltip=['Breed', 'score', 'Rank year', 'Rank']
     )
 
     line_plot = base_plot.mark_line()
