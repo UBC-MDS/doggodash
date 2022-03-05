@@ -5,14 +5,17 @@ import pandas as pd
 import dash_bootstrap_components as dbc
 
 # Read in data
-traits_raw_df = pd.read_csv("../data/breed_traits.csv")
-breed_rank_raw_df = pd.read_csv("../data/breed_rank.csv")
+traits_raw_df = pd.read_csv("data/breed_traits.csv")
+breed_rank_raw_df = pd.read_csv("data/breed_rank.csv")
 
 # For traits list in checklist input
 traits_list_full = traits_raw_df.drop(columns=['Breed' ,'Coat Type', 'Coat Length']).columns
 
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+server = app.server
+
 app.layout = dbc.Container(
     [
         # Header for app
