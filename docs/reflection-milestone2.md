@@ -1,0 +1,3 @@
+# Reflection for our milestone 2 submission
+
+Our dashbboard has incorporated even more features than we planned on. Currently, it has a filter to select the traits, a tentative weight assignment system for those traits, 2 plots showing the total score the top 5 breeds get as well as a plot showing the popularity of those 5 breeds over the past few years and a table with the trait scores and their values. Some known issues so far are the weights not correctly affecting the total score due to positive and negative traits both having the same metric (we want to make the negative weights negatively affect the score) and hyperlinks to more information on the dog breeds not implemented yet.
