@@ -16,7 +16,7 @@ Users can choose the dog traits of interest from the dropdown menu (i.e. Affecti
 
 ## Contributing
 
-Interested in contributing? Check out the [contributing guidelines](../doggodash/CONTRIBUTING.md). Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
+Interested in contributing? Check out the [contributing guidelines](https://github.com/UBC-MDS/doggodash/CONTRIBUTING.md). Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
 
 DoggoDash is built using [Dash](https://dash.plotly.com/), and thus Dash is required for contributing to the project. Dash can be installed by running:
 ```
