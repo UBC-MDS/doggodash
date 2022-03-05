@@ -4,7 +4,8 @@ Welcome to DoggoDash! DoggoDash is an interactive web app created using Dash and
 
 Here is a preview of DoggoDash:
 
-![DoggoDash Preview](docs/images/sketch.png)
+![DoggoDash Preview](doc/images/sketch.png)
+![DoggoDash Preview](doc/images/sketch2.png)
 
 ## Installation
 
@@ -12,7 +13,7 @@ DoggoDash is hosted online by Heroku and can be accessed [here](http://dsci532-2
 
 ## Usage
 
-Users can choose the dog traits of interest from the dropdown menu (i.e. Affectionate With Family, Coat Type, Adaptability Level, Trainability Level). Thereafter, the user can decide the importance of each selected trait according to their preference using the slider provided (i.e. Score 1 for the Affectionate With Family trait if the user prefers an independent dog). As a result of the preferences, our algorithm will return a list of top five dog breeds that fit your preferences the most (in descending order) and display it on the landing page of the app.
+Users can choose the dog traits of interest from the dropdown menu (i.e. Affectionate With Family, Coat Type, Adaptability Level, Trainability Level). Thereafter, the user can decide the importance of each selected trait according to their preference using the slider provided (1 slider for importance of positive traits, 1 for importance of negative traits). As a result of the preferences, our algorithm will return a list of top five dog breeds that fit your preferences the most (in descending order) and display it on the landing page of the app. There will also be a plot showing the yearly ranking trends of the 5 selected dog breeds as well as a table with the details of each individual trait selected. From there, users can explore the recommended breeds and determine which one is the best for them!
 
 ## Contributing
 
