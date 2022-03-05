@@ -4,8 +4,8 @@ import altair as alt
 import pandas as pd
 
 # Read in data
-traits_raw_df = pd.read_csv("../data/breed_traits.csv")
-breed_rank_raw_df = pd.read_csv("../data/breed_rank.csv")
+traits_raw_df = pd.read_csv("data/breed_traits.csv")
+breed_rank_raw_df = pd.read_csv("data/breed_rank.csv")
 
 # For traits list in checklist input
 traits_list_full = traits_raw_df.drop(columns=['Breed' ,'Coat Type', 'Coat Length']).columns
@@ -18,6 +18,9 @@ traits_weights = [
 
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+
+server = app.server
+
 app.layout = html.Div([
     html.Br(),
     html.Br(),
