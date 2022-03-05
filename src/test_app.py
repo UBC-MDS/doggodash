@@ -137,11 +137,20 @@ def plot_altair(traits_list):
         
     #top_5_rank_df
 
-    top_5_rank_plot = alt.Chart(top_5_rank_df).mark_line().encode(
+    base_plot = alt.Chart(top_5_rank_df).encode(
         y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
         x=alt.X('Rank year:Q', axis=alt.Axis(format='.0f')),
-        color='Breed'
+        color='Breed',
+        tooltip=['Breed', 'Rank year', 'Rank']
     )
+
+    line_plot = base_plot.mark_line()
+
+    point_plot = base_plot.mark_point(filled=True)
+
+    top_5_rank_plot = line_plot + point_plot
+
+    top_5_rank_plot 
 
     top_5_rank_plot 
 
