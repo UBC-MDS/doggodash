@@ -1,15 +1,11 @@
 # DoggoDash
 
-Welcome to DoggoDash! DoggoDash is an interactive web app created using Dash and Python which provides visualizations for users to explore the breeds of dog that best match their selected preferences. Whether you are a potential new dog owner or are curious about your current dog breed's ranking among others, DoggoDash can help you!
+Welcome to DoggoDash! DoggoDash is an interactive web app created using Dash and Python which provides visualizations for users to explore the breeds of dog that best match their selected preferences. Whether you are a potential new dog owner or are curious about your current dog breed's ranking among others, DoggoDash can help you! Check it out [here](http://dsci532-2022-group18-py.herokuapp.com/).
 
 Here is a preview of DoggoDash:
 
 ![DoggoDash Preview](doc/images/sketch.png)
 ![DoggoDash Preview](doc/images/sketch2.png)
-
-## Installation
-
-DoggoDash is hosted online by Heroku and can be accessed [here](http://dsci532-2022-group18-py.herokuapp.com/). There is no local installation required.
 
 ## Usage
 
@@ -28,6 +24,15 @@ Once Dash is installed and the repository is cloned (following the instructions 
 python src/app.py
 ```
 Simply copy and paste the web address created into your browser of choice to begin seeing your changes come to life!
+
+## Local installation
+
+DoggoDash can be run locally using [Docker](https://www.docker.com/). First, clone the doggodash repository to your local machine and make sure the Docker desktop application is open. Then, run the following commands:
+```bash
+cd doggodash
+docker-compose up
+```
+The local Docker build can then be accessed by navigating to http://localhost:8000/ in a web browser.
 
 ## License
 
