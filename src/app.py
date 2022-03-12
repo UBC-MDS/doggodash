@@ -14,6 +14,9 @@ traits_list_full = traits_raw_df.drop(columns=['Breed' ,'Coat Type', 'Coat Lengt
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+# Add title
+app.title = "doggodash"
+
 server = app.server
 
 app.layout = dbc.Container(
