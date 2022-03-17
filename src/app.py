@@ -329,8 +329,7 @@ def plot_altair(traits_list, positive_weight, negative_weight):
         top_5_df.rename(columns={old_col_name:new_col_name}, inplace=True)
 
     top_5_rank_df = top_5_df.melt(id_vars = ['Breed', 'BreedID'], value_vars=col_list, var_name='Rank year', value_name='Rank')    
-        
-    #top_5_rank_df
+    
 
     top_5_rank_plot = (alt.Chart(top_5_rank_df).mark_line().encode(
         y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
@@ -344,8 +343,8 @@ def plot_altair(traits_list, positive_weight, negative_weight):
         height=200,
     ).interactive()
     )
-
-    return top_5_plot.to_html(),  top_5_df.to_html(), top_5_rank_plot.to_html()
+    traits_list.extend(['Breed','score'])
+    return top_5_plot.to_html(),  top_5_df[traits_list].to_html(), top_5_rank_plot.to_html()
 
 
 if __name__ == '__main__':
