@@ -311,7 +311,7 @@ def plot_altair(traits_list, positive_weight, negative_weight):
         x=alt.X('score:Q'),
         y=alt.Y('Breed:N', sort='-x'),
         color=alt.Color('Breed', 
-                        scale=alt.Scale(scheme='greenblue'),
+                        scale=alt.Scale(scheme='category10'),
                         legend=None
                        ),
         href='Image',
@@ -338,7 +338,7 @@ def plot_altair(traits_list, positive_weight, negative_weight):
         y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
         x=alt.X('Rank year:Q', axis=alt.Axis(format='.0f')),
         color=alt.Color('Breed', 
-                        scale=alt.Scale(scheme='viridis'),
+                        scale=alt.Scale(scheme='category10'),
                        ),
         tooltip=['Breed','score:Q']
     ).properties(
