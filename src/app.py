@@ -241,6 +241,101 @@ app.layout = dbc.Container(
             ],
 
         ),
+        
+        # New feature - surprise me
+        html.Hr(
+            style={
+                'height': '2px',
+                'border-width': '0',
+                'color': 'Indigo'
+            },
+        ),
+                
+        dbc.Row(
+            [
+                dbc.Row(
+                    [
+                       html.P(
+                               'Want to be amused about a randomly selected dog? Click on surpise me, have fun learning (forget the analytics, this could be your new interest!)',
+                               style = { 
+                                        'color': 'Indigo', 
+                                        'fontSize': 18,
+                                        'textAlign': 'center',
+                                        'background-color': 'lavender',
+                               },
+                        ),
+                        
+                        dbc.Button(
+                            "Surprise me", 
+                            id="surpise-me-button", 
+                            className="me-2", 
+                            n_clicks=1
+                        )
+                    ]
+                ),
+                
+                html.Br(),
+                
+                html.Br(),
+                
+                dbc.Col(
+                    [
+                        html.P(
+                               'Details of the surpise me dog breed',
+                               style = { 
+                                        'color': 'Indigo', 
+                                        'fontSize': 18,
+                                        'textAlign': 'center',
+                                        'background-color': 'lavender',
+                               },
+                        ),
+                        
+                        html.Iframe(
+                            id='surpise_me_dog_details',
+                            style={
+                                'display': 'block',
+                                'border-width': '0', 
+                                'width': '100%', 
+                                'height': '350px',
+                                'background-color': 'lavender',
+                                'align': 'center'
+                            },
+                        ),
+                    ],
+                    md=6,
+                    align='left'
+                ),
+
+                dbc.Col(
+                    [
+                        html.P(
+                               'Yearly ranking trend of top 5 dog breeds',
+                               style = { 
+                                        'color': 'Indigo', 
+                                        'fontSize': 18,
+                                        'textAlign': 'center',
+                                        'background-color': 'lavender',
+                               },
+                        ),
+                        html.Iframe(
+                            id='surpise_me_dog_ranking_trend',
+                            style={
+                                'display': 'block',
+                                'border-width': '0', 
+                                'width': '100%', 
+                                'height': '300px',
+                                'background-color': 'lavender'
+                            },
+                        ),
+                        
+                        
+                    ],
+                    md=6
+                ),
+
+            ],
+
+        ),
     ],
     style={
         'background-color': 'Beige'
@@ -346,6 +441,55 @@ def plot_altair(traits_list, positive_weight, negative_weight):
     traits_list.extend(['Breed','score'])
     return top_5_plot.to_html(),  top_5_df[traits_list].to_html(), top_5_rank_plot.to_html()
 
+@app.callback(
+    Output("surpise_me_dog_details", "srcDoc"),
+    Output("surpise_me_dog_ranking_trend", "srcDoc"),
+    [Input("surpise-me-button", "n_clicks")]
+)
 
+def surprise_me(n):
+    if n:
+        surprise_me_raw_df = breed_rank_raw_df.sample()
+
+    # The following 3 lines is for avoiding picking a breed that does not have past rank data.
+    while (surprise_me_raw_df.isnull().any().any()):
+        print("something is null.  picking another sample.") #for debug
+        surprise_me_raw_df = breed_rank_raw_df.sample()
+        
+        
+    # Merge the 2 dataframes together
+    surprise_me_raw_df = surprise_me_raw_df.merge(traits_raw_df.drop('Breed', axis=1), 
+                                              how='left', on='BreedID')
+    
+    # The following few lines of code is for changing the column names to tidy the "Rank year" and "Rank" columns.
+    col_list = list()
+    for year in range(2013, 2021):
+        new_col_name = str(year)
+        col_list.append(str(year))
+        old_col_name = new_col_name + " " + "Rank"
+        surprise_me_raw_df.rename(columns={old_col_name:new_col_name}, inplace=True)
+        
+    # The dataframe now has the columns Breed, BreedID, Image (URL), Rank year and Rank. Please 
+    surprise_me_df = surprise_me_raw_df.melt(
+        id_vars = ['Breed', 'BreedID', 'Image'], 
+        value_vars=col_list, 
+        var_name='Rank year', 
+        value_name='Rank'
+    )
+    
+    # This is the ranking trend plot.
+    surprise_me_plot = alt.Chart(surprise_me_df).mark_line().encode(
+        y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
+        x=alt.X('Rank year:Q', axis=alt.Axis(format='.0f')),
+        tooltip=['Breed', 'Rank:Q']
+    ).properties(
+        width=400,
+        height=200,
+        title=f"Surprise! Have you heard of {surprise_me_df.Breed[0]}? Here is its ranking trend."
+    ).interactive()
+    
+    return(surprise_me_df.to_html(), surprise_me_plot.to_html())
+        
+ 
 if __name__ == '__main__':
     app.run_server(debug=True)
