@@ -14,9 +14,6 @@ traits_list_full = traits_raw_df.drop(columns=['Breed' ,'Coat Type', 'Coat Lengt
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# Add title
-app.title = "doggodash"
-
 server = app.server
 
 app.layout = dbc.Container(
@@ -147,7 +144,7 @@ app.layout = dbc.Container(
                                 style={
                                     'display': 'block',
                                     'border-width': '1', 
-                                    'height': '230px',
+                                    'height': '300px',
                                     'width': '100%',
                                     
                                 },
@@ -223,7 +220,7 @@ app.layout = dbc.Container(
                                 'display': 'block',
                                 'border-width': '0', 
                                 'width': '100%', 
-                                'height': '250px',
+                                'height': '300px',
                                 'background-color': 'lavender'
                             },
                         ),
@@ -298,20 +295,21 @@ def plot_altair(traits_list, positive_weight, negative_weight):
     for i in range(len(traits_list)):
         if len(traits_list)==0:
             continue
-        elif traits_list[i] in traits_dislikeable:
+        elif set(traits_list[i]).intersection(set(traits_dislikeable)):
             traits_df['score'] += traits_df[traits_list[i]] * negative_weight
         else:
             traits_df['score'] += traits_df[traits_list[i]] * positive_weight
-    
-    merged_df = traits_df.merge(breed_rank_raw_df, how='left', on='BreedID')
-    
-    top_5_df = merged_df.sort_values(['score', '2020 Rank'], ascending=[False, True]).head(5)
+        
+    top_5_df = traits_df.sort_values('score', ascending=False).head(5).merge(
+        breed_rank_raw_df, how='left', 
+        on='BreedID'
+    ) # Havent tried multiple outputs yet as it wasnt possible in single callback
         
     top_5_plot = alt.Chart(top_5_df, title='Your Top 5 Dog Breeds').mark_bar().encode(
         x=alt.X('score:Q'),
         y=alt.Y('Breed:N', sort='-x'),
         color=alt.Color('Breed', 
-                        scale=alt.Scale(scheme='category10'),
+                        scale=alt.Scale(scheme='greenblue'),
                         legend=None
                        ),
         href='Image',
@@ -331,14 +329,13 @@ def plot_altair(traits_list, positive_weight, negative_weight):
         top_5_df.rename(columns={old_col_name:new_col_name}, inplace=True)
 
     top_5_rank_df = top_5_df.melt(id_vars = ['Breed', 'BreedID'], value_vars=col_list, var_name='Rank year', value_name='Rank')    
-        
-    #top_5_rank_df
+    
 
     top_5_rank_plot = (alt.Chart(top_5_rank_df).mark_line().encode(
         y=alt.Y('Rank:Q', scale=alt.Scale(zero=False, reverse=True)),
         x=alt.X('Rank year:Q', axis=alt.Axis(format='.0f')),
         color=alt.Color('Breed', 
-                        scale=alt.Scale(scheme='category10'),
+                        scale=alt.Scale(scheme='viridis'),
                        ),
         tooltip=['Breed','score:Q']
     ).properties(
@@ -346,8 +343,8 @@ def plot_altair(traits_list, positive_weight, negative_weight):
         height=200,
     ).interactive()
     )
-
-    return top_5_plot.to_html(),  top_5_df.to_html(), top_5_rank_plot.to_html()
+    traits_list.extend(['Breed','score'])
+    return top_5_plot.to_html(),  top_5_df[traits_list].to_html(), top_5_rank_plot.to_html()
 
 
 if __name__ == '__main__':
